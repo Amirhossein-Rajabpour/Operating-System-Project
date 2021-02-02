@@ -545,7 +545,11 @@ void procdump(void)
 
 int getParentID(void)
 {
-  return 1111;
+  acquire(&ptable.lock);
+  struct proc *curproc = myproc();
+  int parent_pid = curproc->parent->pid;
+  release(&ptable.lock);
+  return parent_pid;
 }
 
 int getChildren(void)
