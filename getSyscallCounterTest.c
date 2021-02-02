@@ -5,5 +5,5 @@
 int main()
 {
     printf(1, "getSyscallCounter() output: %d\n", getSyscallCounter());
-    return 0;
+    exit();
 }

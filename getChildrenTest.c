@@ -5,5 +5,5 @@
 int main()
 {
     printf(1, "getChildren() output: %d\n", getChildren());
-    return 0;
+    exit();
 }
