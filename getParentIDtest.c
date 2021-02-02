@@ -8,9 +8,8 @@ int main()
     {
         int pid = fork();
         if (pid > 0){ // parent
-            sleep(100);
-            printf(1, "This is process (getpid) %d and the parent id is %d\n", getpid(), getParentID());
             wait();
+            printf(1, "This is process (getpid) %d and the parent id is %d\n", getpid(), getParentID());
         }
         else // child
             printf(1, "This is process (getpid) %d and the parent id is %d\n", getpid(), getParentID());
