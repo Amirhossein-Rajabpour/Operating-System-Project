@@ -103,6 +103,9 @@ extern int sys_unlink(void);
 extern int sys_wait(void);
 extern int sys_write(void);
 extern int sys_uptime(void);
+extern int sys_getParentID(void);
+extern int sys_getChildren(void);
+extern int sys_getSystemcallCounter(void);
 
 static int (*syscalls[])(void) = {
 [SYS_fork]    sys_fork,
@@ -126,6 +129,9 @@ static int (*syscalls[])(void) = {
 [SYS_link]    sys_link,
 [SYS_mkdir]   sys_mkdir,
 [SYS_close]   sys_close,
+[SYS_getParentID]   sys_getParentID,
+[SYS_getChildren]   sys_getChildren,
+[SYS_getSystemcallCounter]   sys_getSystemcallCounter,
 };
 
 void

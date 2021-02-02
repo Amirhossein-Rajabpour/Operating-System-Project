@@ -89,3 +89,21 @@ sys_uptime(void)
   release(&tickslock);
   return xticks;
 }
+
+int
+sys_getParentID(void)
+{
+  return 1111;
+}
+
+int
+sys_getChildren(void)
+{
+  return 2222;
+}
+
+int
+sys_getSystemcallCounter(void)
+{
+  return 3333;
+}

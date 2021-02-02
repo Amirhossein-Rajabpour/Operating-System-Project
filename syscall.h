@@ -20,3 +20,6 @@
 #define SYS_link   19
 #define SYS_mkdir  20
 #define SYS_close  21
+#define SYS_getParentID  22
+#define sys_getChildren  23
+#define sys_getSystemcallCounter  24
