@@ -91,7 +91,9 @@ int sys_getParentID(void)
 
 int sys_getChildren(void)
 {
-  return getChildren();
+  int *children_pid;
+  argptr(0, (void *)&children_pid, sizeof(*children_pid));
+  return getChildren(children_pid);
 }
 
 int sys_getSyscallCounter(void)

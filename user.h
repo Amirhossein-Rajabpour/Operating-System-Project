@@ -24,7 +24,7 @@ char *sbrk(int);
 int sleep(int);
 int uptime(void);
 int getParentID(void);
-int getChildren(void);
+int getChildren(int *children_pid);
 int getSyscallCounter(void);
 
 // ulib.c
