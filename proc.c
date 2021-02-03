@@ -116,6 +116,7 @@ found:
   p->context->eip = (uint)forkret;
 
   p->r_time = QUANTUM;
+  p->priority = DEFAULT_PRIORITY;
 
   return p;
 }
