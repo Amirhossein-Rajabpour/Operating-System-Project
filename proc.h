@@ -62,6 +62,7 @@ struct proc
   char name[16];              // Process name (debugging)
 
   int r_time;                 // Remaining time left for RR scheduling
+  int priority;               // Process priority, 1 being the highest, 6 lowest.
 };
 
 // Process memory is laid out contiguously, low addresses first:
