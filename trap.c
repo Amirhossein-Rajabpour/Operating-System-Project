@@ -114,6 +114,8 @@ void trap(struct trapframe *tf)
     }
     else
     {
+      // Process allowed time is finished, reset its remaining time, and yield
+      myproc()->r_time = QUANTUM;
       yield();
     }
   }
