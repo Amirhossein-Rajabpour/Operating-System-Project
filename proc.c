@@ -575,7 +575,15 @@ int getChildren(int *children_pid)
   return num_children;
 }
 
-int getSyscallCounter(void)
+int getSyscallCounter(int process_num)
 {
-  return 3333;
+  syscall();
+  if (process_num > 0 && process_num < 25)
+  {
+    return syscallsCount[process_num - 1];
+  }
+  else
+  {
+    return -1;
+  }
 }

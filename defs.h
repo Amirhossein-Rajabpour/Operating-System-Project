@@ -122,7 +122,7 @@ void wakeup(void *);
 void yield(void);
 int getParentID(void);
 int getChildren(int *children_pid);
-int getSyscallCounter(void);
+int getSyscallCounter(int process_num);
 
 // swtch.S
 void swtch(struct context **, struct context *);
@@ -152,6 +152,7 @@ int strncmp(const char *, const char *, uint);
 char *strncpy(char *, const char *, int);
 
 // syscall.c
+extern int syscallsCount[24];
 int argint(int, int *);
 int argptr(int, char **, int);
 int argstr(int, char **);
