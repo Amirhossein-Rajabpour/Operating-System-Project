@@ -122,7 +122,7 @@ void wakeup(void *);
 void yield(void);
 int getParentID(void);
 int getChildren(int *children_pid);
-int getSyscallCounter(int process_num);
+int getSyscallCounter(int syscall_num);
 
 // swtch.S
 void swtch(struct context **, struct context *);

@@ -104,13 +104,13 @@ int sys_getChildren(void)
 
 int sys_getSyscallCounter(void)
 {
-  int process_num;
-  if (argint(0, &process_num) < 0)
+  int syscall_num;
+  if (argint(0, &syscall_num) < 0)
   {
     return -1;
   }
   else
   {
-    return getSyscallCounter(process_num);
+    return getSyscallCounter(syscall_num);
   }
 }
