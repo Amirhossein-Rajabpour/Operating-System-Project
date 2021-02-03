@@ -7,6 +7,8 @@
 #include "proc.h"
 #include "spinlock.h"
 
+enum schedPolicy policy;
+
 struct
 {
   struct spinlock lock;
@@ -336,6 +338,7 @@ int wait(void)
 void scheduler(void)
 {
   struct proc *p;
+  // struct proc *highest_p; // process with highest priority (runnable)
   struct cpu *c = mycpu();
   c->proc = 0;
 

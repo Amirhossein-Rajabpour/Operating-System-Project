@@ -68,9 +68,9 @@ struct proc
 // Scheduling options
 enum schedPolicy
 {
-  ROUND_ROBIN,
-  PRIORITY,
-  MULTILAYRED_PRIORITY
+  ROUND_ROBIN = 0,
+  PRIORITY = 1,
+  MULTILAYRED_PRIORITY = 2
 };
 
 // Process memory is laid out contiguously, low addresses first:
