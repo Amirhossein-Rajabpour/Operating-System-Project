@@ -20,13 +20,16 @@ int main()
     {
         printf(1, "Original process ID: %d\n", original_pid);
         printf(1, "Number of children: %d\n", num_children);
-        printf(1, "Child proccesses: ");
+        printf(1, "Child proccesses: [");
         for (int i = 0; i < num_children; i++)
         {
-            printf(1, "%d", children_pid[i]);
+            printf(1, "%d, ", children_pid[i]);
         }
-        printf(1, "\n");
+        printf(1, "]\n");
     }
+
+    while (wait() != -1)
+        ;
 
     exit();
 }
