@@ -11,4 +11,5 @@
 #define LOGSIZE (MAXOPBLOCKS * 3) // max data blocks in on-disk log
 #define NBUF (MAXOPBLOCKS * 3)    // size of disk block cache
 #define FSSIZE 1000               // size of file system in blocks
-#define QUANTUM 4
+#define QUANTUM 4                 // RR scheduling time quantum
+#define DEFAULT_PRIORITY 3        // priority scheduling default priority
