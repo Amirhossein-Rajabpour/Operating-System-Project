@@ -61,8 +61,16 @@ struct proc
   struct inode *cwd;          // Current directory
   char name[16];              // Process name (debugging)
 
-  int r_time;                 // Remaining time left for RR scheduling
-  int priority;               // Process priority, 1 being the highest, 6 lowest.
+  int r_time;   // Remaining time left for RR scheduling
+  int priority; // Process priority, 1 being the highest, 6 lowest.
+};
+
+// Scheduling options
+enum schedPolicy
+{
+  ROUND_ROBIN,
+  PRIORITY,
+  MULTILAYRED_PRIORITY
 };
 
 // Process memory is laid out contiguously, low addresses first:
