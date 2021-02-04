@@ -121,7 +121,7 @@ int sys_setPriority(void)
   if (argint(0, &newPriority) < 0)
     return -1;
   else
-    return setPriority();
+    return setPriority(newPriority);
 }
 
 int sys_changePolicy(void)
@@ -130,5 +130,5 @@ int sys_changePolicy(void)
   if (argint(0, &newPolicy) < 0)
     return -1;
   else
-    return changePolicy();
+    return changePolicy(newPolicy);
 }

@@ -154,7 +154,7 @@ int strncmp(const char *, const char *, uint);
 char *strncpy(char *, const char *, int);
 
 // syscall.c
-extern int syscallsCount[24];
+extern int syscallsCount[26];
 int argint(int, int *);
 int argptr(int, char **, int);
 int argstr(int, char **);
