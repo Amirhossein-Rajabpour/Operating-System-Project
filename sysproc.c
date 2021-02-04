@@ -122,5 +122,8 @@ int sys_setPriority(void)
 
 int sys_changePolicy(void)
 {
-  return changePolicy();
+  if (argint(0, &syscall_num) < 0)
+    return -1;
+  else
+    return changePolicy();
 }

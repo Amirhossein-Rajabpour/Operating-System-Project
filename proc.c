@@ -599,7 +599,13 @@ int setPriority()
 /*body*/
 }
 
-int changePolicy()
+int changePolicy(int newPolicy)
 {
-/*body*/
+  if(newPolicy == 0 || newPolicy == 1 || newPolicy == 2)
+  {
+    policy = newPolicy;
+    return 0;
+  }
+  else
+    return -1;
 }
