@@ -7,6 +7,7 @@
 #include "proc.h"
 #include "spinlock.h"
 
+// An enum default value is always zero
 enum schedPolicy policy;
 
 struct
@@ -327,6 +328,23 @@ int wait(void)
   }
 }
 
+// Switch to chosen process.  It is the process's job
+// to release ptable.lock and then reacquire it
+// before jumping back to us.
+void switch_to(struct cpu *c, struct proc *p)
+{
+  c->proc = p;
+  switchuvm(p);
+  p->state = RUNNING;
+
+  swtch(&(c->scheduler), p->context);
+  switchkvm();
+
+  // Process is done running for now.
+  // It should have changed its p->state before coming back.
+  c->proc = 0;
+}
+
 //PAGEBREAK: 42
 // Per-CPU process scheduler.
 // Each CPU calls scheduler() after setting itself up.
@@ -338,7 +356,7 @@ int wait(void)
 void scheduler(void)
 {
   struct proc *p;
-  // struct proc *highest_p; // process with highest priority (runnable)
+  struct proc *highest_p; // process with highest priority (runnable)
   struct cpu *c = mycpu();
   c->proc = 0;
 
@@ -347,26 +365,41 @@ void scheduler(void)
     // Enable interrupts on this processor.
     sti();
 
-    // Loop over process table looking for process to run.
     acquire(&ptable.lock);
-    for (p = ptable.proc; p < &ptable.proc[NPROC]; p++)
+
+    switch (policy)
     {
-      if (p->state != RUNNABLE)
-        continue;
+    // Round Robin
+    case 0:
+      // Loop over process table to find and run runnable processes
+      for (p = ptable.proc; p < &ptable.proc[NPROC]; p++)
+      {
+        if (p->state != RUNNABLE)
+          continue;
 
-      // Switch to chosen process.  It is the process's job
-      // to release ptable.lock and then reacquire it
-      // before jumping back to us.
-      c->proc = p;
-      switchuvm(p);
-      p->state = RUNNING;
+        switch_to(c, p);
+      }
+      break;
 
-      swtch(&(c->scheduler), p->context);
-      switchkvm();
+    // Priority
+    case 1:
+      // Loop over process table to find runnable process WITH HIGHEST PRIORITY
+      highest_p = ptable.proc;
+      for (p = ptable.proc; p < &ptable.proc[NPROC]; p++)
+      {
+        if (p->state != RUNNABLE)
+          continue;
 
-      // Process is done running for now.
-      // It should have changed its p->state before coming back.
-      c->proc = 0;
+        if (highest_p->priority > p->priority)
+        {
+          highest_p = p;
+        }
+      }
+      switch_to(c, highest_p);
+      break;
+
+    case 2:
+      break;
     }
     release(&ptable.lock);
   }
