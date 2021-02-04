@@ -6,6 +6,7 @@
         "types.h": "c",
         "user.h": "c",
         "proc.h": "c",
-        "memlayout.h": "c"
+        "memlayout.h": "c",
+        "syscall.h": "c"
     }
 }

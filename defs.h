@@ -1,3 +1,5 @@
+#include "param.h"
+
 struct buf;
 struct context;
 struct file;
@@ -158,7 +160,7 @@ int strncmp(const char *, const char *, uint);
 char *strncpy(char *, const char *, int);
 
 // syscall.c
-extern int syscallsCount[26];
+extern int syscallsCount[NSYSCALLS];
 int argint(int, int *);
 int argptr(int, char **, int);
 int argstr(int, char **);
