@@ -34,4 +34,6 @@ SYSCALL(getChildren)
 SYSCALL(getSyscallCounter)
 SYSCALL(setPriority)
 SYSCALL(changePolicy)
-
+SYSCALL(getTurnAroundTime)
+SYSCALL(getWaitingTime)
+SYSCALL(getCBT)

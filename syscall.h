@@ -25,3 +25,6 @@
 #define SYS_getSyscallCounter 24
 #define SYS_setPriority 25
 #define SYS_changePolicy 26
+#define sys_getTurnAroundTime 27
+#define sys_getWaitingTime 28
+#define sys_getCBT 29

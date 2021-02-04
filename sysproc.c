@@ -132,3 +132,18 @@ int sys_changePolicy(void)
   else
     return changePolicy(newPolicy);
 }
+
+int sys_getTurnAroundTime(void)
+{
+  return 1;
+}
+
+int sys_getWaitingTime(void)
+{
+  return 1;
+}
+
+int sys_getCBT(void)
+{
+  return 1;
+}

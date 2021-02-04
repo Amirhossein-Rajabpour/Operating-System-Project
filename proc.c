@@ -660,3 +660,18 @@ int changePolicy(int newPolicy)
   else
     return -1;
 }
+
+int getTurnAroundTime(void)
+{
+  return 1;
+}
+
+int getWaitingTime(void)
+{
+  return 1;
+}
+
+int getCBT(void)
+{
+  return 1;
+}
