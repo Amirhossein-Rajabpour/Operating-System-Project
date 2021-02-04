@@ -111,14 +111,14 @@ void trap(struct trapframe *tf)
     switch (policy)
     {
     case ROUND_ROBIN:
-      if (myproc()->r_time > 0)
+      if (myproc()->rr_remaining_t > 0)
       {
-        myproc()->r_time--;
+        myproc()->rr_remaining_t--;
       }
       else
       {
         // Process allowed time is finished, reset its remaining time, and yield
-        myproc()->r_time = QUANTUM;
+        myproc()->rr_remaining_t = QUANTUM;
         yield();
         break;
       }

@@ -118,7 +118,7 @@ found:
   memset(p->context, 0, sizeof *p->context);
   p->context->eip = (uint)forkret;
 
-  p->r_time = QUANTUM;
+  p->rr_remaining_t = QUANTUM;
   p->priority = DEFAULT_PRIORITY;
 
   return p;

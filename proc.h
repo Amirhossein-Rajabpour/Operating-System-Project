@@ -61,7 +61,7 @@ struct proc
   struct inode *cwd;          // Current directory
   char name[16];              // Process name (debugging)
 
-  int r_time;                 // Remaining time left for RR scheduling
+  int rr_remaining_t;         // Remaining time left for RR scheduling
   int priority;               // Process priority, 1 being the highest, 6 lowest.
 
   int creation_t;             // Time which this process was created (turn into EMBRYO)
