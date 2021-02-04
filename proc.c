@@ -311,6 +311,11 @@ int wait(void)
         p->name[0] = 0;
         p->killed = 0;
         p->state = UNUSED;
+
+        // Reset time spent in each state, for the next call.
+        p->sleeping_t = 0;
+        p->runnable_t = 0;
+        p->running_t = 0;
         release(&ptable.lock);
         return pid;
       }
