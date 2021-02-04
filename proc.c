@@ -575,6 +575,31 @@ void procdump(void)
   }
 }
 
+void updateStateDurations()
+{
+  struct proc *p;
+  for (p = ptable.proc; p < &ptable.proc[NPROC]; p++)
+  {
+    switch (p->state)
+    {
+    case SLEEPING:
+      p->sleeping_t++;
+      break;
+
+    case RUNNABLE:
+      p->runnable_t++;
+      break;
+
+    case RUNNING:
+      p->running_t++;
+      break;
+
+    default:
+      break;
+    }
+  }
+}
+
 int getParentID(void)
 {
   acquire(&ptable.lock);

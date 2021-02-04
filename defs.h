@@ -120,6 +120,7 @@ void userinit(void);
 int wait(void);
 void wakeup(void *);
 void yield(void);
+void updateStateDurations();
 int getParentID(void);
 int getChildren(int *children_pid);
 int getSyscallCounter(int syscall_num);

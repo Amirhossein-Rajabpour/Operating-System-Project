@@ -132,6 +132,12 @@ void trap(struct trapframe *tf)
     }
   }
 
+  // Update each process sleeping, runnable, running time
+  if (tf->trapno == T_IRQ0 + IRQ_TIMER)
+  {
+    updateStateDurations();
+  }
+
   // Check if the process has been killed since we yielded
   if (myproc() && myproc()->killed && (tf->cs & 3) == DPL_USER)
     exit();
