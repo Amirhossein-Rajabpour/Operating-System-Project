@@ -663,18 +663,18 @@ int changePolicy(int newPolicy)
 
 int getTurnAroundTime(int pid)
 {
-  if (&ptable.proc[pid]->state == ZOMBIE)
-    return &ptable.proc[pid]->sleeping_t + &ptable.proc[pid]->runnable_t + &ptable.proc[pid]->running_t;
+  if ((&ptable.proc[pid])->state == ZOMBIE)
+    return (&ptable.proc[pid])->sleeping_t + (&ptable.proc[pid])->runnable_t + (&ptable.proc[pid])->running_t;
   else
     return -1;
 }
 
 int getWaitingTime(int pid)
 {
-  return &ptable.proc[pid]->sleeping_t + &ptable.proc[pid]->runnable_t;
+  return (&ptable.proc[pid])->sleeping_t + (&ptable.proc[pid])->runnable_t;
 }
 
 int getCBT(int pid)
 {
-  return &ptable.proc[pid]->running_t;
+  return (&ptable.proc[pid])->running_t;
 }
