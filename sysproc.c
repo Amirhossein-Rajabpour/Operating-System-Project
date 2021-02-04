@@ -135,15 +135,28 @@ int sys_changePolicy(void)
 
 int sys_getTurnAroundTime(void)
 {
-  return 1;
+  int pid;
+  if (argint(0, &pid) < 0)
+    return -1;
+  else
+    return getTurnAroundTime(pid);
 }
 
 int sys_getWaitingTime(void)
 {
-  return 1;
+  int pid;
+  if (argint(0, &pid) < 0)
+    return -1;
+  else
+    return getWaitingTime(pid);
 }
 
 int sys_getCBT(void)
 {
-  return 1;
+  int pid;
+  if (argint(0, &pid) < 0)
+    return -1;
+  else
+    return getCBT(pid);
+  
 }

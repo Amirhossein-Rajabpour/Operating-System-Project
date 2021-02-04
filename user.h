@@ -28,9 +28,9 @@ int getChildren(int *children_pid);
 int getSyscallCounter(int syscall_num);
 int setPriority(int newPriority);
 int changePolicy(int newPolicy);
-int getTurnAroundTime(void);
-int getWaitingTime(void);
-int getCBT(void);
+int getTurnAroundTime(int pid);
+int getWaitingTime(int pid);
+int getCBT(int pid);
 
 // ulib.c
 int stat(const char *, struct stat *);

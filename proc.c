@@ -661,17 +661,20 @@ int changePolicy(int newPolicy)
     return -1;
 }
 
-int getTurnAroundTime(void)
+int getTurnAroundTime(int pid)
 {
-  return 1;
+  if (&ptable.proc[pid]->state == ZOMBIE)
+    return &ptable.proc[pid]->sleeping_t + &ptable.proc[pid]->runnable_t + &ptable.proc[pid]->running_t;
+  else
+    return -1;
 }
 
-int getWaitingTime(void)
+int getWaitingTime(int pid)
 {
-  return 1;
+  return &ptable.proc[pid]->sleeping_t + &ptable.proc[pid]->runnable_t;
 }
 
-int getCBT(void)
+int getCBT(int pid)
 {
-  return 1;
+  return &ptable.proc[pid]->running_t;
 }
