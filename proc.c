@@ -338,7 +338,6 @@ int wait(void)
 void scheduler(void)
 {
   struct proc *p;
-  // struct proc *highest_p; // process with highest priority (runnable)
   struct cpu *c = mycpu();
   c->proc = 0;
 
@@ -349,29 +348,56 @@ void scheduler(void)
 
     // Loop over process table looking for process to run.
     acquire(&ptable.lock);
-    for (p = ptable.proc; p < &ptable.proc[NPROC]; p++)
+    switch(policy)
     {
-      if (p->state != RUNNABLE)
-        continue;
+      case ROUND_ROBIN:
+        for (p = ptable.proc; p < &ptable.proc[NPROC]; p++)
+        {
+          if (p->state != RUNNABLE)
+            continue;
+          switch_process(c,highest_p);
 
-      // Switch to chosen process.  It is the process's job
-      // to release ptable.lock and then reacquire it
-      // before jumping back to us.
-      c->proc = p;
-      switchuvm(p);
-      p->state = RUNNING;
+          // p->r_time = QUANTUM;
+        }
+        break;
 
-      swtch(&(c->scheduler), p->context);
-      switchkvm();
+      case PRIORITY:
+        struct proc *highest_p; // process with highest priority (runnable)
+        highest_p = ptable.proc;
+        for (p = ptable.proc; p < &ptable.proc[NPROC]; p++) // finding the process with highest priority
+        {
+          if (p->state != RUNNABLE)
+            continue;
+          if (p->priority < highest_p->priority)
+            highest_p = p;
+        }
+        switch_process(c,highest_p);
+        break;
 
-      // Process is done running for now.
-      // It should have changed its p->state before coming back.
-      c->proc = 0;
-      // p->r_time = QUANTUM;
+      case MULTILAYRED_PRIORITY:
+        break;
+
     }
     release(&ptable.lock);
   }
 }
+void switch_process(struct cpu *c, struct proc *p)
+{
+  // Switch to chosen process.  It is the process's job
+  // to release ptable.lock and then reacquire it
+  // before jumping back to us.
+  c->proc = p;
+  switchuvm(p);
+  p->state = RUNNING;
+
+  swtch(&(c->scheduler), p->context);
+  switchkvm();
+
+  // Process is done running for now.
+  // It should have changed its p->state before coming back.
+  c->proc = 0;
+}
+
 
 // Enter scheduler.  Must hold only ptable.lock
 // and have changed proc->state. Saves and restores
