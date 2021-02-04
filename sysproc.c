@@ -117,12 +117,17 @@ int sys_getSyscallCounter(void)
 
 int sys_setPriority(void)
 {
-  return setPriority();
+  int newPriority;
+  if (argint(0, &newPriority) < 0)
+    return -1;
+  else
+    return setPriority();
 }
 
 int sys_changePolicy(void)
 {
-  if (argint(0, &syscall_num) < 0)
+  int newPolicy;
+  if (argint(0, &newPolicy) < 0)
     return -1;
   else
     return changePolicy();
