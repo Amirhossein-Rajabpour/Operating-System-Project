@@ -328,11 +328,11 @@ int wait(void)
   }
 }
 
-// Switch to chosen process.  It is the process's job
-// to release ptable.lock and then reacquire it
-// before jumping back to us.
-void switch_to(struct cpu *c, struct proc *p)
+void switch_process(struct cpu *c, struct proc *p)
 {
+  // Switch to chosen process.  It is the process's job
+  // to release ptable.lock and then reacquire it
+  // before jumping back to us.
   c->proc = p;
   switchuvm(p);
   p->state = RUNNING;
@@ -366,39 +366,32 @@ void scheduler(void)
     sti();
 
     acquire(&ptable.lock);
-
     switch (policy)
     {
-    // Round Robin
-    case 0:
-      // Loop over process table to find and run runnable processes
+    case ROUND_ROBIN:
       for (p = ptable.proc; p < &ptable.proc[NPROC]; p++)
       {
         if (p->state != RUNNABLE)
           continue;
+        switch_process(c, p);
 
-        switch_to(c, p);
+        // p->r_time = QUANTUM;
       }
       break;
 
-    // Priority
-    case 1:
-      // Loop over process table to find runnable process WITH HIGHEST PRIORITY
+    case PRIORITY:
       highest_p = ptable.proc;
-      for (p = ptable.proc; p < &ptable.proc[NPROC]; p++)
+      for (p = ptable.proc; p < &ptable.proc[NPROC]; p++) // finding the process with highest priority
       {
         if (p->state != RUNNABLE)
           continue;
-
-        if (highest_p->priority > p->priority)
-        {
+        if (p->priority < highest_p->priority)
           highest_p = p;
-        }
       }
-      switch_to(c, highest_p);
+      switch_process(c, highest_p);
       break;
 
-    case 2:
+    case MULTILAYRED_PRIORITY:
       break;
     }
     release(&ptable.lock);
@@ -605,9 +598,7 @@ int getChildren(int *children_pid)
   for (p = ptable.proc; p < &ptable.proc[NPROC]; p++)
   {
     if (p->parent->pid == curpid)
-    {
       children_pid[num_children++] = p->pid;
-    }
   }
   release(&ptable.lock);
 
@@ -617,11 +608,30 @@ int getChildren(int *children_pid)
 int getSyscallCounter(int syscall_num)
 {
   if (syscall_num > 0 && syscall_num < 25)
-  {
     return syscallsCount[syscall_num - 1];
+  else
+    return -1;
+}
+
+int setPriority(int newPriority)
+{
+  struct proc *p = myproc();
+  if (newPriority > 0 && newPriority < 7)
+  {
+    p->priority = newPriority;
+    return 0;
   }
   else
-  {
     return -1;
+}
+
+int changePolicy(int newPolicy)
+{
+  if (newPolicy == 0 || newPolicy == 1 || newPolicy == 2)
+  {
+    policy = newPolicy;
+    return 0;
   }
+  else
+    return -1;
 }

@@ -32,3 +32,6 @@ SYSCALL(uptime)
 SYSCALL(getParentID)
 SYSCALL(getChildren)
 SYSCALL(getSyscallCounter)
+SYSCALL(setPriority)
+SYSCALL(changePolicy)
+
