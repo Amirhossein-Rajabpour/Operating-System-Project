@@ -108,15 +108,27 @@ void trap(struct trapframe *tf)
   if (myproc() && myproc()->state == RUNNING &&
       tf->trapno == T_IRQ0 + IRQ_TIMER)
   {
-    if (myproc()->r_time > 0)
+    switch (policy)
     {
-      myproc()->r_time--;
-    }
-    else
-    {
-      // Process allowed time is finished, reset its remaining time, and yield
-      myproc()->r_time = QUANTUM;
+    case ROUND_ROBIN:
+      if (myproc()->r_time > 0)
+      {
+        myproc()->r_time--;
+      }
+      else
+      {
+        // Process allowed time is finished, reset its remaining time, and yield
+        myproc()->r_time = QUANTUM;
+        yield();
+        break;
+      }
+
+    case PRIORITY:
       yield();
+      break;
+
+    case MULTILAYRED_PRIORITY:
+      break;
     }
   }
 

@@ -607,7 +607,7 @@ int getChildren(int *children_pid)
 
 int getSyscallCounter(int syscall_num)
 {
-  if (syscall_num > 0 && syscall_num < 25)
+  if (syscall_num > 0 && syscall_num < 27)
     return syscallsCount[syscall_num - 1];
   else
     return -1;

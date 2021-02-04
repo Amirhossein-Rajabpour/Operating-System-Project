@@ -8,7 +8,7 @@
 #include "syscall.h"
 
 // stores how many times each of the syscalls has been called
-int syscallsCount[24] = {0};
+int syscallsCount[26] = {0};
 
 // User code makes a system call with INT T_SYSCALL.
 // System call number in %eax.
@@ -107,7 +107,6 @@ extern int sys_getChildren(void);
 extern int sys_getSyscallCounter(void);
 extern int sys_setPriority(void);
 extern int sys_changePolicy(void);
-
 
 static int (*syscalls[])(void) = {
     [SYS_fork] sys_fork,

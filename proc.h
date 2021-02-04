@@ -73,6 +73,8 @@ enum schedPolicy
   MULTILAYRED_PRIORITY = 2
 };
 
+extern enum schedPolicy policy;
+
 // Process memory is laid out contiguously, low addresses first:
 //   text
 //   original data and bss
