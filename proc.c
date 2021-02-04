@@ -367,6 +367,7 @@ void scheduler(void)
       // Process is done running for now.
       // It should have changed its p->state before coming back.
       c->proc = 0;
+      // p->r_time = QUANTUM;
     }
     release(&ptable.lock);
   }
@@ -591,4 +592,14 @@ int getSyscallCounter(int syscall_num)
   {
     return -1;
   }
+}
+
+int setPriority()
+{
+/*body*/
+}
+
+int changePolicy()
+{
+/*body*/
 }
