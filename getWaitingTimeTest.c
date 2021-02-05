@@ -4,7 +4,7 @@
 
 int main()
 {
-    printf(1, "This is prioritySchedTest template!");
+    printf(1, "This is getWaitingTimeTest template!");
 
     while (wait() != -1)
         ;
