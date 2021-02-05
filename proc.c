@@ -312,10 +312,10 @@ int wait(void)
         p->killed = 0;
         p->state = UNUSED;
 
-        // Reset time spent in each state, for the next call.
-        p->sleeping_t = 0;
-        p->runnable_t = 0;
-        p->running_t = 0;
+        // // Reset time spent in each state, for the next call.
+        // p->sleeping_t = 0;
+        // p->runnable_t = 0;
+        // p->running_t = 0;
         release(&ptable.lock);
         return pid;
       }
@@ -669,10 +669,10 @@ int changePolicy(int newPolicy)
 
 int getTurnAroundTime(int pid)
 {
-  if ((&ptable.proc[pid])->state == ZOMBIE)
-    return (&ptable.proc[pid])->sleeping_t + (&ptable.proc[pid])->runnable_t + (&ptable.proc[pid])->running_t;
-  else
-    return -1;
+  // if ((&ptable.proc[pid])->state == ZOMBIE)
+  return (&ptable.proc[pid])->sleeping_t + (&ptable.proc[pid])->runnable_t + (&ptable.proc[pid])->running_t;
+  // else
+  //   return -1;
 }
 
 int getWaitingTime(int pid)
