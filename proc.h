@@ -61,6 +61,9 @@ struct proc
   struct inode *cwd;          // Current directory
   char name[16];              // Process name (debugging)
 
+  // stores how many times each of the syscalls has been called
+  int syscallsCount[NSYSCALLS];
+
   int rr_remaining_t; // Remaining time left for RR scheduling
   int priority;       // Process priority, 1 being the highest, 6 lowest.
 

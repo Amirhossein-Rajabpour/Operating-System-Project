@@ -637,8 +637,9 @@ int getChildren(int *children_pid)
 
 int getSyscallCounter(int syscall_num)
 {
+  struct proc *curproc = myproc();
   if (syscall_num > 0 && syscall_num < NSYSCALLS)
-    return syscallsCount[syscall_num - 1];
+    return curproc->syscallsCount[syscall_num - 1];
   else
     return -1;
 }
