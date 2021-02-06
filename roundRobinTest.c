@@ -4,6 +4,8 @@
 
 int main(int argc, char *argv[])
 {
+    changePolicy(0);
+
     int main_pid = getpid();
     for (int i = 0; i < 10; i++)
     {
@@ -15,13 +17,12 @@ int main(int argc, char *argv[])
     {
         for (int i = 0; i < 100; i++)
             printf(1, "/%d/: %d\n", getpid(), i);
-        
-        sleep(10);
-        wait();
 
         int turnAroundTime = getTurnAroundTime(getpid());
         int waitingTime = getWaitingTime(getpid());
         int CBT = getCBT(getpid());
+
+        wait();
 
         printf(1, "turnAroundTime for process /%d/ is :%d\n", getpid(), turnAroundTime);
         printf(1, "waitingTime for process /%d/ is :%d\n", getpid(), waitingTime);
