@@ -15,7 +15,8 @@ int main(int argc, char *argv[])
     {
         for (int i = 0; i < 100; i++)
             printf(1, "/%d/: %d\n", getpid(), i);
-
+        
+        sleep(10);
         wait();
 
         int turnAroundTime = getTurnAroundTime(getpid());
