@@ -4,19 +4,25 @@
 
 int main(int argc, char *argv[])
 {
-    changePolicy(0);
+    int result = changePolicy(1);
+    printf(1, "%d", result);
+
     int original_pid = getpid();
     int child_num = -1;
     int priority = -1;
 
     for (int i = 0; i < 30; i++)
     {
-        if (fork() == 0)
+        if (fork() == 0) // Child
         {
-            child_num = i;
-            priority = 6 - (int)(i / 5);
+            child_num = i + 1;
+            // priority = 6 - (i / 5);
+            priority = (i / 5) + 1;
             printf(1, "i: %d, priority: %d\n", i, priority);
             setPriority(priority);
+        }
+        else // Parent
+        {
             break;
         }
     }
@@ -27,16 +33,21 @@ int main(int argc, char *argv[])
             printf(1, "/%d/: /%d/\n", child_num, i);
 
         int pid = getpid();
-        printf(1, "Turnaround time for process /%d/ is :%d\n", pid, getTurnAroundTime(pid));
-        printf(1, "Waiting time for process /%d/ is :%d\n", pid, getWaitingTime(pid));
-        printf(1, "CBT for process /%d/ is :%d\n", pid, getCBT(pid));
+        int turnAroundTime = getTurnAroundTime(pid);
+        int waitingTime = getWaitingTime(pid);
+        int CBT = getCBT(pid);
+
+        while (wait() != -1)
+            ;
+
+        printf(1, "PID: %d, Child Number: %d, -> Turnaround time: %d\n", pid, child_num, turnAroundTime);
+        printf(1, "PID: %d, Child Number: %d, -> Waiting time: %d\n", pid, child_num, waitingTime);
+        printf(1, "PID: %d, Child Number: %d, -> CBT: %d\n", pid, child_num, CBT);
         printf(1, "\n\n");
     }
 
     while (wait() != -1)
-    {
         ;
-    }
 
     exit();
 }
