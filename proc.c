@@ -365,7 +365,10 @@ void switch_process(struct cpu *c, struct proc *p)
 void scheduler(void)
 {
   struct proc *p;
-  struct proc *highest_p; // process with highest priority (runnable)
+
+  struct proc *highest_p = 0; // process with highest priority (runnable)
+  int hasRunnable = 0;
+
   struct cpu *c = mycpu();
   c->proc = 0;
 
@@ -389,7 +392,17 @@ void scheduler(void)
       break;
 
     case PRIORITY:
-      highest_p = ptable.proc;
+      hasRunnable = 0;
+      for (p = ptable.proc; p < &ptable.proc[NPROC]; p++)
+      {
+        if (p->state == RUNNABLE)
+        {
+          highest_p = p;
+          hasRunnable = 1;
+          break;
+        }
+      }
+
       for (p = ptable.proc; p < &ptable.proc[NPROC]; p++) // finding the process with highest priority
       {
         if (p->state != RUNNABLE)
@@ -397,7 +410,11 @@ void scheduler(void)
         if (p->priority < highest_p->priority)
           highest_p = p;
       }
-      switch_process(c, highest_p);
+
+      if (hasRunnable)
+      {
+        switch_process(c, highest_p);
+      }
       break;
 
     case MULTILAYRED_PRIORITY:
