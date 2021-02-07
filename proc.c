@@ -734,6 +734,7 @@ int customWait(int *procTimes)
         procTimes[0] = turnAroundTime;
         procTimes[1] = waitingTime;
         procTimes[2] = cbt;
+        procTimes[3] = p->priority;
 
         pid = p->pid;
         kfree(p->kstack);
