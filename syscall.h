@@ -28,3 +28,5 @@
 #define SYS_getTurnAroundTime 27
 #define SYS_getWaitingTime 28
 #define SYS_getCBT 29
+#define SYS_customWait 30
+

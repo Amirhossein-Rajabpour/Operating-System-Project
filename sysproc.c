@@ -160,3 +160,17 @@ int sys_getCBT(void)
     return getCBT(pid);
   
 }
+
+int sys_customWait(void)
+{
+  int * procTimes;
+  if (argptr(0, (void *)&procTimes, sizeof(*procTimes)) < 0)
+  {
+    return -1;
+  }
+  else
+  {
+    return customWait(procTimes);
+  }
+
+}
