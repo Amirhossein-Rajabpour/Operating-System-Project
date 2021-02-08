@@ -47,27 +47,35 @@ int main(int argc, char *argv[])
     }
 
     int original_pid = getpid();
-    int child_num = -1;
-    int priority = -1;
+    int indexInQueue = 0;
 
     for (int i = 0; i < NUM_CHILDREN; i++)
     {
         if (fork() == 0) // Child
         {
             if (i == 0)
+            {
                 changeQueue(1);
+                indexInQueue = 0;
+            }
             else if (i == 10)
+            {
                 changeQueue(2);
+                indexInQueue = 0;
+            }
             else if (i == 20)
+            {
                 changeQueue(3);
+                indexInQueue = 0;
+            }            
             else if (i == 30)
-                changeQueue(4); 
-
-            child_num = i + 1;
-            // priority = 6 - (i / 5);
-            priority = (i / 5) + 1;
+            {
+                changeQueue(4);
+                indexInQueue = 0;
+            }
+            cur_queue[indexInQueue] = getpid();
+            indexInQueue++;
             printf(1, "i: %d, priority: %d\n", i, priority);
-            setPriority(priority);
             break;
         }
     }
