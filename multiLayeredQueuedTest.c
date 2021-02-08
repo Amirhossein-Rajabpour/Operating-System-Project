@@ -40,8 +40,8 @@ void changeQueue(int queueNumber)
 int main(int argc, char *argv[])
 {
 
-    int result = changePolicy(2);
-    if (result == 2)
+    int result = changePolicy(5);
+    if (result == 5)
     {
         printf(1, "Policy changed successfully!\n");
     }
