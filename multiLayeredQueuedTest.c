@@ -16,23 +16,20 @@ void changeQueue(int queueNumber)
     switch(queueNumber)
     {
         case 1:
+
             cur_queue = first_queue;
-            changePolicy(0); // its default scheduling
             break;
 
         case 2:
             cur_queue = second_queue;
-            changePolicy(2); // its priority scheduling
             break;
 
         case 3:
             cur_queue = third_queue;
-            changePolicy(3); // its reverse priority schedulng
             break;
 
         case 4:
             cur_queue = forth_queue;
-            changePolicy(1); // its round robin scheduling
             break;
     }
 }
