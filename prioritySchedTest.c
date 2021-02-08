@@ -17,11 +17,6 @@ int main(int argc, char *argv[])
         printf(1, "Policy change failed!\n");
     }
 
-    int priorities[NUM_CHILDREN] = {0};  // priorites for each child
-    int turnarounds[NUM_CHILDREN] = {0}; // turnaround times for each child
-    int waitings[NUM_CHILDREN] = {0};    // waiting times for each child
-    int CBTs[NUM_CHILDREN] = {0};        // CBTs for each child
-
     int original_pid = getpid();
     int child_num = -1;
     int priority = -1;
@@ -47,13 +42,12 @@ int main(int argc, char *argv[])
 
     else
     {
+        int priorities[NUM_CHILDREN] = {0};  // priorites for each child
+        int turnarounds[NUM_CHILDREN] = {0}; // turnaround times for each child
+        int waitings[NUM_CHILDREN] = {0};    // waiting times for each child
+        int CBTs[NUM_CHILDREN] = {0};        // CBTs for each child
+
         printf(1, "\n\n\n*****Times for each child*****\n");
-
-        // while (wait() > 0)
-        // {
-        //     printf(1, "wow");
-        // }
-
         int *procTimes = malloc(4 * sizeof(int));
         int i = 0;
         while (customWait(procTimes) > 0)

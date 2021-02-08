@@ -355,10 +355,11 @@ void switch_process(struct cpu *c, struct proc *p)
   c->proc = 0;
 }
 
-struct proc* findHighestInQueue(void)
+void *findHighestInQueue(void)
 {
-  struct proc * p = NULL;
-  hasRunnable = 0;
+  struct proc *p = 0;
+  struct proc *highest_p = 0;
+  int hasRunnable = 0;
   for (p = ptable.proc; p < &ptable.proc[NPROC]; p++)
   {
     if (p->state == RUNNABLE)
@@ -379,15 +380,15 @@ struct proc* findHighestInQueue(void)
 
   if (hasRunnable)
     return highest_p;
-  else 
-    return -1;
-  
+  else
+    return (void *)-1;
 }
 
-struct proc* findLowestInQueue(void)
+void *findLowestInQueue(void)
 {
-  struct proc * p = NULL;
-  hasRunnable = 0;
+  struct proc *p = 0;
+  struct proc *lowest_p = 0;
+  int hasRunnable = 0;
   for (p = ptable.proc; p < &ptable.proc[NPROC]; p++)
   {
     if (p->state == RUNNABLE)
@@ -409,7 +410,7 @@ struct proc* findLowestInQueue(void)
   if (hasRunnable)
     return lowest_p;
   else
-    return -1;
+    return (void *)-1;
 }
 
 //PAGEBREAK: 42
@@ -502,44 +503,48 @@ void scheduler(void)
       break;
 
     case MULTILAYRED_PRIORITY:
-      for (int currentQueue = 1 ; currentQueue < 5 ; currentQueue++)
+      for (int currentQueue = 1; currentQueue < 5; currentQueue++)
       {
         {
-            switch(currentQueue)
+          switch (currentQueue)
+          {
+          case 2:
+            while (1)
             {
-              case 2:
-                while(1)
-                {
-                  highest_p = findHighestInQueue();
-                  if (highest_p == -1)
-                    break;
-                  else
-                    switch_process(c, highest_p);
-                }
+              highest_p = findHighestInQueue();
+              if ((int)highest_p == -1)
                 break;
-
-              case 3:
-                while(1)
-                {
-                  lowest_p = findLowestInQueue();
-                  if (lowest_p == -1)
-                    break;
-                  else
-                    switch_process(c, lowest_p);
-                }
-                break;
-
-              case 1:
-              case 4:
-                for (p = ptable.proc; p < &ptable.proc[NPROC]; p++)
-                {
-                  if (p->queue == currentQueue && p->state == RUNNABLE)
-                  {
-                    switch_process(c, p);
-                    break;
-                  }
-                }
+              else
+              {
+                highest_p = (struct proc *)highest_p;
+                switch_process(c, highest_p);
+              }
             }
+            break;
+
+          case 3:
+            while (1)
+            {
+              lowest_p = findLowestInQueue();
+              if ((int)lowest_p == -1)
+                break;
+              else
+                lowest_p = (struct proc *)lowest_p;
+              switch_process(c, lowest_p);
+            }
+            break;
+
+          case 1:
+          case 4:
+            for (p = ptable.proc; p < &ptable.proc[NPROC]; p++)
+            {
+              if (p->queue == currentQueue && p->state == RUNNABLE)
+              {
+                switch_process(c, p);
+                break;
+              }
+            }
+          }
         }
       }
       break;
@@ -547,7 +552,6 @@ void scheduler(void)
     release(&ptable.lock);
   }
 }
- 
 
 // Enter scheduler.  Must hold only ptable.lock
 // and have changed proc->state. Saves and restores

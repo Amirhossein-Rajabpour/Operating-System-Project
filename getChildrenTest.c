@@ -7,7 +7,7 @@ int main()
     int original_pid = getpid();
 
     int num_children;
-    int *children_pid = malloc(64);
+    int *children_pid = malloc(64 * sizeof(int));
 
     for (int i = 0; i < 3; i++)
     {

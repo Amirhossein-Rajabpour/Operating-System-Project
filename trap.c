@@ -113,7 +113,7 @@ void trap(struct trapframe *tf)
     case DEFAULT:
       yield();
       break;
-      
+
     case ROUND_ROBIN:
       if (myproc()->rr_remaining_t == 0)
       {
@@ -133,30 +133,30 @@ void trap(struct trapframe *tf)
       break;
 
     case MULTILAYRED_PRIORITY:
-      switch(myproc->queue)
+      switch (myproc()->queue)
       {
-        case 1: // default
-        case 2: // priority scheduling
-        case 3: // reverse priority scheduling
-          yield();
-          break;
+      case 1: // default
+      case 2: // priority scheduling
+      case 3: // reverse priority scheduling
+        yield();
+        break;
 
-        case 4: // round robin scheduling
-          if (myproc()->rr_remaining_t == 0)
-            {
-              // Reset remainin time back to quantum
-              myproc()->rr_remaining_t = QUANTUM;
-              yield();
-            }
-            else
-            {
-              myproc()->rr_remaining_t--;
-            }
-            break;
-        default:
+      case 4: // round robin scheduling
+        if (myproc()->rr_remaining_t == 0)
+        {
+          // Reset remainin time back to quantum
+          myproc()->rr_remaining_t = QUANTUM;
           yield();
-          break;
-      } 
+        }
+        else
+        {
+          myproc()->rr_remaining_t--;
+        }
+        break;
+      default:
+        yield();
+        break;
+      }
       break;
     }
   }
