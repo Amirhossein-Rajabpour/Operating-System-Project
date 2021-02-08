@@ -77,9 +77,11 @@ struct proc
 // Scheduling options
 enum schedPolicy
 {
-  ROUND_ROBIN = 0,
-  PRIORITY = 1,
-  MULTILAYRED_PRIORITY = 2
+  DEFAULT = 0,
+  ROUND_ROBIN = 1,
+  PRIORITY = 2,
+  INVERSE_PRIORITY = 3,
+  MULTILAYRED_PRIORITY = 4
 };
 
 extern enum schedPolicy policy;

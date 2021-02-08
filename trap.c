@@ -110,6 +110,10 @@ void trap(struct trapframe *tf)
   {
     switch (policy)
     {
+    case DEFAULT:
+      yield();
+      break;
+      
     case ROUND_ROBIN:
       if (myproc()->rr_remaining_t == 0)
       {
@@ -121,8 +125,10 @@ void trap(struct trapframe *tf)
       {
         myproc()->rr_remaining_t--;
       }
+      break;
 
     case PRIORITY:
+    case INVERSE_PRIORITY:
       yield();
       break;
 

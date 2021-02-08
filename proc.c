@@ -367,7 +367,7 @@ void scheduler(void)
   struct proc *p;
 
   struct proc *highest_p = 0; // process with highest priority (runnable)
-  int hasRunnable = 0;
+  int hasRunnable = 0; // Whether there exists a runnable process or not
 
   struct cpu *c = mycpu();
   c->proc = 0;
@@ -380,6 +380,7 @@ void scheduler(void)
     acquire(&ptable.lock);
     switch (policy)
     {
+    case DEFAULT:
     case ROUND_ROBIN:
       for (p = ptable.proc; p < &ptable.proc[NPROC]; p++)
       {
@@ -679,7 +680,7 @@ int setPriority(int newPriority)
 
 int changePolicy(int newPolicy)
 {
-  if (newPolicy == 0 || newPolicy == 1 || newPolicy == 2)
+  if (newPolicy >= 0 && newPolicy < 5)
   {
     policy = newPolicy;
     return 0;
