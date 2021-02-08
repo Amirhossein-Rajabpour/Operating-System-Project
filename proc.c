@@ -439,7 +439,7 @@ void scheduler(void)
 
       if (hasRunnable)
       {
-        switch_process(c, highest_p);
+        switch_process(c, lowest_p);
       }
       break;
 

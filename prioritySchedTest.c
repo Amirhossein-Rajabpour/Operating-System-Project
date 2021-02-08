@@ -41,18 +41,25 @@ int main(int argc, char *argv[])
 
     if (getpid() != original_pid)
     {
-        for (int i = 1; i <= 250; i++)
+        for (int i = 1; i <= 1; i++)
             printf(1, "/%d/: /%d/\n", child_num, i);
+
+        exit();
     }
 
     else
     {
         printf(1, "\n\n\n*****Times for each child*****\n");
-        int *procTimes = {0};
+
+        // while (wait() > 0)
+        // {
+        //     printf(1, "fuck");
+        // }
+
+        int *procTimes = malloc(4 * sizeof(int));
         int i = 0;
         while (customWait(procTimes) > 0)
         {
-            customWait(procTimes);
             printf(1, "YEKI DIGE GEREFTAM\n");
             int childPriority = procTimes[3];
             int childTurnaround = procTimes[0];
@@ -68,9 +75,6 @@ int main(int argc, char *argv[])
 
         printf(1, "%d%d%d%d", priorities[0], turnarounds[0], waitings[0], CBTs[0]);
     }
-
-    while (wait() != -1)
-        ;
 
     exit();
 }
