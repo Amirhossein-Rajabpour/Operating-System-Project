@@ -365,10 +365,17 @@ void switch_process(struct cpu *c, struct proc *p)
 void scheduler(void)
 {
   struct proc *p;
+<<<<<<< HEAD
   struct proc *first_runnable_p = {0}; // the first runnable process found in ptable
   struct proc *highest_p = 0;    // runnable process with highest priority (runnable)
   struct proc *lowest_p = 0;     // runnable process with lowest priority
   int hasRunnable = 0;           // whether there exists a runnable process or not
+=======
+
+  struct proc *highest_p = 0; // runnable process with highest priority
+  struct proc *lowest_p = 0;  // runnable process with lowest priority
+  int hasRunnable = 0;        // Whether there exists a runnable process or not
+>>>>>>> ff60cd0024785a413a025983e40cf05e6432fbfb
 
   struct cpu *c = mycpu();
   c->proc = 0;
@@ -379,48 +386,67 @@ void scheduler(void)
     sti();
 
     acquire(&ptable.lock);
-    for (p = ptable.proc; p < &ptable.proc[NPROC]; p++)
-    {
-      if (p->state != RUNNABLE)
-        continue;
-      first_runnable_p = p;
-      hasRunnable = 1;
-    }
     switch (policy)
     {
     case DEFAULT:
     case ROUND_ROBIN:
-      if (hasRunnable)
-        switch_process(c, first_runnable_p);
+      for (p = ptable.proc; p < &ptable.proc[NPROC]; p++)
+      {
+        if (p->state != RUNNABLE)
+          continue;
+        switch_process(c, p);
+      }
       break;
 
     case PRIORITY:
+      hasRunnable = 0;
+      for (p = ptable.proc; p < &ptable.proc[NPROC]; p++)
+      {
+        if (p->state == RUNNABLE)
+        {
+          highest_p = p;
+          hasRunnable = 1;
+          break;
+        }
+      }
+
+      for (p = ptable.proc; p < &ptable.proc[NPROC]; p++) // finding the process with highest priority
+      {
+        if (p->state != RUNNABLE)
+          continue;
+        if (p->priority < highest_p->priority)
+          highest_p = p;
+      }
+
       if (hasRunnable)
       {
-        highest_p = first_runnable_p;
-        for (p = first_runnable_p; p < &ptable.proc[NPROC]; p++) // finding the process with highest priority
-        {
-          if (p->state != RUNNABLE)
-            continue;
-          if (p->priority < highest_p->priority)
-            highest_p = p;
-        }
         switch_process(c, highest_p);
       }
       break;
 
     case INVERSE_PRIORITY:
+      hasRunnable = 0;
+      for (p = ptable.proc; p < &ptable.proc[NPROC]; p++)
+      {
+        if (p->state == RUNNABLE)
+        {
+          lowest_p = p;
+          hasRunnable = 1;
+          break;
+        }
+      }
+
+      for (p = ptable.proc; p < &ptable.proc[NPROC]; p++) // finding the process with highest priority
+      {
+        if (p->state != RUNNABLE)
+          continue;
+        if (p->priority > lowest_p->priority)
+          lowest_p = p;
+      }
+
       if (hasRunnable)
       {
-        lowest_p = first_runnable_p;
-        for (p = first_runnable_p; p < &ptable.proc[NPROC]; p++) // finding the process with highest priority
-        {
-          if (p->state != RUNNABLE)
-            continue;
-          if (p->priority > highest_p->priority)
-            lowest_p = p;
-        }
-        switch_process(c, lowest_p);
+        switch_process(c, highest_p);
       }
       break;
 

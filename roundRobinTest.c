@@ -4,7 +4,7 @@
 
 int main(int argc, char *argv[])
 {
-    changePolicy(0);
+    changePolicy(1);
 
     int main_pid = getpid();
     for (int i = 0; i < 10; i++)
