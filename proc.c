@@ -355,6 +355,63 @@ void switch_process(struct cpu *c, struct proc *p)
   c->proc = 0;
 }
 
+struct proc* findHighestInQueue(void)
+{
+  struct proc * p = NULL;
+  hasRunnable = 0;
+  for (p = ptable.proc; p < &ptable.proc[NPROC]; p++)
+  {
+    if (p->state == RUNNABLE)
+    {
+      highest_p = p;
+      hasRunnable = 1;
+      break;
+    }
+  }
+
+  for (p = ptable.proc; p < &ptable.proc[NPROC]; p++) // finding the process with highest priority
+  {
+    if (p->state != RUNNABLE)
+      continue;
+    if (p->priority < highest_p->priority)
+      highest_p = p;
+  }
+
+  if (hasRunnable)
+    return highest_p;
+  else 
+    return -1;
+  
+}
+
+struct proc* findLowestInQueue(void)
+{
+  struct proc * p = NULL;
+  hasRunnable = 0;
+  for (p = ptable.proc; p < &ptable.proc[NPROC]; p++)
+  {
+    if (p->state == RUNNABLE)
+    {
+      lowest_p = p;
+      hasRunnable = 1;
+      break;
+    }
+  }
+
+  for (p = ptable.proc; p < &ptable.proc[NPROC]; p++) // finding the process with lowest priority
+  {
+    if (p->state != RUNNABLE)
+      continue;
+    if (p->priority > lowest_p->priority)
+      lowest_p = p;
+  }
+
+  if (hasRunnable)
+    return lowest_p;
+  else
+    return -1;
+}
+
 //PAGEBREAK: 42
 // Per-CPU process scheduler.
 // Each CPU calls scheduler() after setting itself up.
@@ -453,12 +510,18 @@ void scheduler(void)
 
               case 2:
                 highest_p = findHighestInQueue();
-                switch_process(c, highest_p);
+                if (highest_p == -1)
+                  break;
+                else
+                  switch_process(c, highest_p);
                 break;
 
               case 3:
                 lowest_p = findLowestInQueue();
-                switch_process(c, lowest_p);
+                if (lowest_p == -1)
+                  break;
+                else
+                  switch_process(c, lowest_p);
                 break;
 
               case 1:
@@ -479,9 +542,7 @@ void scheduler(void)
     release(&ptable.lock);
   }
 }
-
-
-
+ 
 
 // Enter scheduler.  Must hold only ptable.lock
 // and have changed proc->state. Saves and restores
