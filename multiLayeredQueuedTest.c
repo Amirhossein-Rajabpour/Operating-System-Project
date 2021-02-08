@@ -47,7 +47,7 @@ int main(int argc, char *argv[])
 
     else
     {
-        int priorities[NUM_CHILDREN] = {0};  // priorites for each child
+        int queues[NUM_CHILDREN] = {0};      // priorites for each child
         int turnarounds[NUM_CHILDREN] = {0}; // turnaround times for each child
         int waitings[NUM_CHILDREN] = {0};    // waiting times for each child
         int CBTs[NUM_CHILDREN] = {0};        // CBTs for each child
@@ -57,12 +57,12 @@ int main(int argc, char *argv[])
         int i = 0;
         while (customWait(procTimes) > 0)
         {
-            int childPriority = procTimes[3];
+            int childQueue = procTimes[3];
             int childTurnaround = procTimes[0];
             int childWaiting = procTimes[1];
             int childCBT = procTimes[2];
 
-            priorities[i] = childPriority;
+            queues[i] = childQueue;
             turnarounds[i] = childTurnaround;
             waitings[i] = childWaiting;
             CBTs[i] = childCBT;
@@ -73,27 +73,27 @@ int main(int argc, char *argv[])
         for (int j = 0; j < NUM_CHILDREN; j++)
         {
             printf(1, "Child with priority %d -> Turnaround: %d, Waiting: %d, CBT: %d\n",
-                   priorities[j], turnarounds[j], waitings[j], CBTs[j]);
+                   queues[j], turnarounds[j], waitings[j], CBTs[j]);
         }
 
-        printf(1, "\n\n\n*****AVG Times for each priority class*****\n");
-        int turnaroundsPerClass[6] = {0};
-        int waitingsPerClass[6] = {0};
-        int CBTsPerClass[6] = {0};
+        printf(1, "\n\n\n*****AVG Times for each queue*****\n");
+        int turnaroundsPerQueue[4] = {0};
+        int waitingsPerQueue[4] = {0};
+        int CBTsPerQueue[4] = {0};
         for (int j = 0; j < NUM_CHILDREN; j++)
         {
-            int childPriority = priorities[j];
-            turnaroundsPerClass[childPriority - 1] += turnarounds[j];
-            waitingsPerClass[childPriority - 1] += waitings[j];
-            CBTsPerClass[childPriority - 1] += CBTs[j];
+            int childQueue = queues[j];
+            turnaroundsPerQueue[childQueue - 1] += turnarounds[j];
+            waitingsPerQueue[childQueue - 1] += waitings[j];
+            CBTsPerQueue[childQueue - 1] += CBTs[j];
         }
-        for (int j = 0; j < 6; j++)
+        for (int j = 0; j < 4; j++)
         {
-            printf(1, "Priority class: %d -> AVG Turnaround: %d, AVG Waiting: %d, AVG CBT: %d\n",
+            printf(1, "Queue: %d -> AVG Turnaround: %d, AVG Waiting: %d, AVG CBT: %d\n",
                    j + 1,
-                   turnaroundsPerClass[j] / (NUM_CHILDREN / 6),
-                   waitingsPerClass[j] / (NUM_CHILDREN / 6),
-                   CBTsPerClass[j] / (NUM_CHILDREN / 6));
+                   turnaroundsPerQueue[j] / (NUM_CHILDREN / 4),
+                   waitingsPerQueue[j] / (NUM_CHILDREN / 4),
+                   CBTsPerQueue[j] / (NUM_CHILDREN / 4));
         }
 
         printf(1, "\n\n\n*****AVG Times in total*****\n");
