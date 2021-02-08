@@ -47,6 +47,13 @@ int main(int argc, char *argv[])
 
     else
     {
+        printf(1, "\n\n\n*****Times for each child*****\n");
+
+        // while (wait() > 0)
+        // {
+        //     printf(1, "wow");
+        // }
+
         int *procTimes = malloc(4 * sizeof(int));
         int i = 0;
         while (customWait(procTimes) > 0)
