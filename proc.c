@@ -365,17 +365,10 @@ void switch_process(struct cpu *c, struct proc *p)
 void scheduler(void)
 {
   struct proc *p;
-<<<<<<< HEAD
-  struct proc *first_runnable_p = {0}; // the first runnable process found in ptable
-  struct proc *highest_p = 0;    // runnable process with highest priority (runnable)
-  struct proc *lowest_p = 0;     // runnable process with lowest priority
-  int hasRunnable = 0;           // whether there exists a runnable process or not
-=======
 
   struct proc *highest_p = 0; // runnable process with highest priority
   struct proc *lowest_p = 0;  // runnable process with lowest priority
   int hasRunnable = 0;        // Whether there exists a runnable process or not
->>>>>>> ff60cd0024785a413a025983e40cf05e6432fbfb
 
   struct cpu *c = mycpu();
   c->proc = 0;
