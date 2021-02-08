@@ -429,7 +429,7 @@ void scheduler(void)
         }
       }
 
-      for (p = ptable.proc; p < &ptable.proc[NPROC]; p++) // finding the process with highest priority
+      for (p = ptable.proc; p < &ptable.proc[NPROC]; p++) // finding the process with lowest priority
       {
         if (p->state != RUNNABLE)
           continue;
