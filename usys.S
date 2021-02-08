@@ -37,4 +37,7 @@ SYSCALL(changePolicy)
 SYSCALL(getTurnAroundTime)
 SYSCALL(getWaitingTime)
 SYSCALL(getCBT)
+int setQueue(int queueNumber);
 SYSCALL(customWait)
+SYSCALL(setQueue)
+

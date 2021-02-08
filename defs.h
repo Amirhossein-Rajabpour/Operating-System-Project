@@ -132,6 +132,7 @@ int getTurnAroundTime(int pid);
 int getWaitingTime(int pid);
 int getCBT(int pid);
 int customWait(int *procTimes);
+int setQueue(int queueNumber);
 
 // swtch.S
 void swtch(struct context **, struct context *);

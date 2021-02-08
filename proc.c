@@ -121,6 +121,7 @@ found:
   p->sleeping_t = 0;
   p->runnable_t = 0;
   p->running_t = 0;
+  p->queue = 0; // by default each process is in the 0 queue
 
   p->rr_remaining_t = QUANTUM;
   p->priority = DEFAULT_PRIORITY;
@@ -791,5 +792,19 @@ int customWait(int *procTimes)
 
     // Wait for children to exit.  (See wakeup1 call in proc_exit.)
     sleep(curproc, &ptable.lock); //DOC: wait-sleep
+  }
+}
+
+int setQueue(int queueNumber)
+{
+  struct proc *curproc = myproc();
+  if (queueNumber > 4 || queueNumber < 1)
+  {
+    return -1;
+  }
+  else
+  {
+    curproc->queue = queueNumber;
+    return 0;
   }
 }

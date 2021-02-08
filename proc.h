@@ -60,6 +60,7 @@ struct proc
   struct file *ofile[NOFILE]; // Open files
   struct inode *cwd;          // Current directory
   char name[16];              // Process name (debugging)
+  int queue;                  // Defines in which queue the process belongs
 
   // stores how many times each of the syscalls has been called
   int syscallsCount[NSYSCALLS];

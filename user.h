@@ -32,6 +32,8 @@ int getTurnAroundTime(int pid);
 int getWaitingTime(int pid);
 int getCBT(int pid);
 int customWait(int *procTimes);
+int setQueue(int queueNumber);
+
 
 // ulib.c
 int stat(const char *, struct stat *);

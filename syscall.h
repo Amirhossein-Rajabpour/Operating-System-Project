@@ -29,4 +29,5 @@
 #define SYS_getWaitingTime 28
 #define SYS_getCBT 29
 #define SYS_customWait 30
+#define SYS_setQueue 31
 

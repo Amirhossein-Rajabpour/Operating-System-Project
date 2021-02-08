@@ -172,3 +172,15 @@ int sys_customWait(void)
     return customWait(procTimes);
   }
 }
+
+int sys_setQueue(void)
+{
+  int queueNumber;
+  if (argint(0, &queueNumber) < 0)
+  {    
+    return -1;
+  }
+  else
+    return setQueue(queueNumber);
+
+}
