@@ -53,7 +53,7 @@ int main(int argc, char *argv[])
 
         // while (wait() > 0)
         // {
-        //     printf(1, "fuck");
+        //     printf(1, "wow");
         // }
 
         int *procTimes = malloc(4 * sizeof(int));
