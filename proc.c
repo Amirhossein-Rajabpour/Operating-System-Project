@@ -444,6 +444,7 @@ void scheduler(void)
       break;
 
     case MULTILAYRED_PRIORITY:
+      
       break;
     }
     release(&ptable.lock);
