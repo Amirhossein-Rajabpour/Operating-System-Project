@@ -189,6 +189,7 @@ UPROGS=\
 	_getWaitingTimeTest\
 	_roundRobinTest\
 	_prioritySchedTest\
+	_multiLayeredQueuedTest\
 
 
 
@@ -262,7 +263,7 @@ EXTRA=\
 	ln.c ls.c mkdir.c rm.c stressfs.c usertests.c wc.c zombie.c\
 	getParentIDtest.c getChildrenTest.c getSyscallCounterTest.c\
 	getCBTtest.c getTurnAroundTimeTest.c getWaitingTimeTest.c\
-	roundRobinTest.c prioritySchedTest.c\
+	roundRobinTest.c prioritySchedTest.c multiLayeredQueuedTest.c\
 	printf.c umalloc.c\
 	README dot-bochsrc *.pl toc.* runoff runoff1 runoff.list\
 	.gdbinit.tmpl gdbutil\
