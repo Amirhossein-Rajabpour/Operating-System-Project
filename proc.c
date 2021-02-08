@@ -507,21 +507,26 @@ void scheduler(void)
         {
             switch(currentQueue)
             {
-
               case 2:
-                highest_p = findHighestInQueue();
-                if (highest_p == -1)
-                  break;
-                else
-                  switch_process(c, highest_p);
+                while(1)
+                {
+                  highest_p = findHighestInQueue();
+                  if (highest_p == -1)
+                    break;
+                  else
+                    switch_process(c, highest_p);
+                }
                 break;
 
               case 3:
-                lowest_p = findLowestInQueue();
-                if (lowest_p == -1)
-                  break;
-                else
-                  switch_process(c, lowest_p);
+                while(1)
+                {
+                  lowest_p = findLowestInQueue();
+                  if (lowest_p == -1)
+                    break;
+                  else
+                    switch_process(c, lowest_p);
+                }
                 break;
 
               case 1:
