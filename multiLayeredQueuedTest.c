@@ -5,35 +5,6 @@
 // number of children created
 #define NUM_CHILDREN 40
 
-int *cur_queue = {0};
-int *first_queue = {0};
-int *second_queue = {0};
-int *third_queue = {0};
-int *forth_queue = {0};
-
-void changeQueue(int queueNumber)
-{
-    switch(queueNumber)
-    {
-        case 1:
-
-            cur_queue = first_queue;
-            break;
-
-        case 2:
-            cur_queue = second_queue;
-            break;
-
-        case 3:
-            cur_queue = third_queue;
-            break;
-
-        case 4:
-            cur_queue = forth_queue;
-            break;
-    }
-}
-
 int main(int argc, char *argv[])
 {
 

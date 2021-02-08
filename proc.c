@@ -445,12 +445,43 @@ void scheduler(void)
       break;
 
     case MULTILAYRED_PRIORITY:
-      
+      for (int currentQueue = 1 ; currentQueue < 5 ; currentQueue++)
+      {
+        {
+            switch(currentQueue)
+            {
+
+              case 2:
+                highest_p = findHighestInQueue();
+                switch_process(c, highest_p);
+                break;
+
+              case 3:
+                lowest_p = findLowestInQueue();
+                switch_process(c, lowest_p);
+                break;
+
+              case 1:
+              case 4:
+                for (p = ptable.proc; p < &ptable.proc[NPROC]; p++)
+                {
+                  if (p->queue == currentQueue && p->state == RUNNABLE)
+                  {
+                    switch_process(c, p);
+                    break;
+                  }
+                }
+            }
+        }
+      }
       break;
     }
     release(&ptable.lock);
   }
 }
+
+
+
 
 // Enter scheduler.  Must hold only ptable.lock
 // and have changed proc->state. Saves and restores
