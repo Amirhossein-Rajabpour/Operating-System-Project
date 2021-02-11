@@ -362,7 +362,7 @@ void *findHighestInQueue(void)
   int hasRunnable = 0;
   for (p = ptable.proc; p < &ptable.proc[NPROC]; p++)
   {
-    if (p->state == RUNNABLE)
+    if (p->state == RUNNABLE && p->queue == 2)
     {
       highest_p = p;
       hasRunnable = 1;
@@ -372,7 +372,7 @@ void *findHighestInQueue(void)
 
   for (p = ptable.proc; p < &ptable.proc[NPROC]; p++) // finding the process with highest priority
   {
-    if (p->state != RUNNABLE)
+    if (p->state != RUNNABLE || p->queue != 2)
       continue;
     if (p->priority < highest_p->priority)
       highest_p = p;
@@ -391,7 +391,7 @@ void *findLowestInQueue(void)
   int hasRunnable = 0;
   for (p = ptable.proc; p < &ptable.proc[NPROC]; p++)
   {
-    if (p->state == RUNNABLE)
+    if (p->state == RUNNABLE && p->state == 3)
     {
       lowest_p = p;
       hasRunnable = 1;
@@ -401,7 +401,7 @@ void *findLowestInQueue(void)
 
   for (p = ptable.proc; p < &ptable.proc[NPROC]; p++) // finding the process with lowest priority
   {
-    if (p->state != RUNNABLE)
+    if (p->state != RUNNABLE || p->state != 3)
       continue;
     if (p->priority > lowest_p->priority)
       lowest_p = p;
